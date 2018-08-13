@@ -59,6 +59,7 @@ cum_hours=[]
 f,(ax1,ax2)=plt.subplots(2,1)
 ####################################################################
 print("Reading tags...")
+
 """
 Read each csv file and store them as dictionary. 
 Each day of the week has this dictionary of associated values.
@@ -78,6 +79,17 @@ Convert dictionary to dataframe and reindex to sort days of the week
 
 FinalTimes=pd.DataFrame.from_dict(CLOCKDICT)
 FT=FinalTimes.transpose().reindex(Day_Of_Week)
+
+"""
+Don't plot empty hours
+"""
+
+for c in FT.columns:
+    dropflag = False
+    if sum(FT[c]) == 0:
+        FT = FT.drop([c], axis=1)
+
+print(FT)
 
 print("Plotting...")
 """
